@@ -5,14 +5,14 @@
     <title>Matte-Jeopardy: Ma 1a</title>
     <style>
         :root {
-            --bg-color: #1e0d0d;
-            --text-gold: #f1c40f;
+            --bg-color: #1a0f0f;
+            --text-gold: #d4af37;
         }
 
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: var(--bg-color); 
-            color: white; 
+            color: #eee; 
             text-align: center; 
             margin: 0; 
             padding: 20px; 
@@ -20,22 +20,22 @@
 
         h1 { 
             color: var(--text-gold); 
-            text-shadow: 3px 3px 5px rgba(0,0,0,0.5); 
-            font-size: 2.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7); 
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
 
         .score-box { 
-            background: #27ae60; 
-            color: white; 
+            background: #2d5a27; 
+            color: #fff; 
             padding: 10px 30px; 
             display: inline-block; 
-            border-radius: 50px; 
+            border-radius: 8px; 
             font-weight: bold; 
             margin-bottom: 25px; 
-            font-size: 1.4em;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            border: 2px solid #2ecc71;
+            font-size: 1.3em;
+            box-shadow: 0 4px 0 #1e3a1a;
+            border: 1px solid #3e7a36;
         }
 
         .grid { 
@@ -47,38 +47,37 @@
         }
 
         .category-header { 
-            background: #333; 
+            background: #3d2b2b; 
             padding: 15px 5px; 
             font-weight: bold; 
-            border-radius: 8px; 
-            font-size: 0.8em; 
+            border-radius: 5px; 
+            font-size: 0.75em; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            min-height: 70px; 
+            min-height: 60px; 
             text-transform: uppercase;
-            border-bottom: 4px solid #111;
+            border-bottom: 3px solid #221a1a;
+            color: #d4af37;
         }
 
-        /* 3D Cell Styling */
         .cell { 
-            padding: 25px 10px; 
+            padding: 22px 10px; 
             cursor: pointer; 
-            border-radius: 12px; 
+            border-radius: 8px; 
             font-size: 1.1em; 
             transition: all 0.1s ease; 
             border: none;
             font-weight: bold; 
-            color: white; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Dynamiska färger baserat på CSS-variabler som sätts i JS */
         .cell:hover { 
-            filter: brightness(1.2);
+            filter: brightness(1.15);
             transform: translateY(-2px);
         }
 
@@ -88,28 +87,27 @@
         }
 
         .cell.disabled { 
-            background: #444 !important; 
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.5) !important;
+            background: #2a2a2a !important; 
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.6) !important;
             cursor: not-allowed; 
-            opacity: 0.6; 
-            color: #888;
+            opacity: 0.4; 
+            color: #666;
             transform: translateY(4px);
         }
 
-        /* Modal / Frågeruta */
         #modal { 
             display: none; 
             position: fixed; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
-            background: white; 
-            color: #333; 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 0 50px rgba(0,0,0,0.9); 
-            width: 90%; 
-            max-width: 650px; 
+            background: #fdfcfb; 
+            color: #2c1a1a; 
+            padding: 35px; 
+            border-radius: 12px; 
+            box-shadow: 0 0 60px rgba(0,0,0,0.9); 
+            width: 85%; 
+            max-width: 600px; 
             z-index: 1001; 
         }
 
@@ -117,95 +115,116 @@
             display: none; 
             position: fixed; 
             top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); 
+            background: rgba(0,0,0,0.85); 
             z-index: 1000; 
         }
         
         button { 
-            margin: 10px; padding: 15px 30px; 
-            cursor: pointer; background: #e67e22; 
-            color: white; border: none; border-radius: 10px; 
-            font-size: 1.1em; font-weight: bold;
-            box-shadow: 0 4px 0 #a04500;
+            margin: 10px; padding: 12px 25px; 
+            cursor: pointer; background: #8e442d; 
+            color: white; border: none; border-radius: 6px; 
+            font-size: 1em; font-weight: bold;
+            box-shadow: 0 4px 0 #5d2b1d;
         }
 
         .option { 
-            display: block; margin: 12px 0; text-align: left; 
-            padding: 18px; background: #fff5f0; 
-            border: 2px solid #ffccab; border-radius: 12px; 
-            cursor: pointer; 
+            display: block; margin: 10px 0; text-align: left; 
+            padding: 15px; background: #f4ece8; 
+            border: 1px solid #d1b8ac; border-radius: 8px; 
+            cursor: pointer; color: #333;
         }
+        .option:hover { background: #e8dbd4; }
     </style>
 </head>
 <body>
 
-    <h1>MATTE-JEOPARDY</h1>
+    <h1>MATTE-JEOPARDY: Ma 1a</h1>
     <div class="score-box" id="score-display">POÄNG: 0</div>
     
     <div class="grid" id="game-board"></div>
 
     <div class="overlay" id="overlay"></div>
     <div id="modal">
-        <h2 id="modal-category" style="margin-top:0;"></h2>
-        <hr>
-        <div id="question-text" style="font-size: 1.4em; margin: 25px 0;"></div>
+        <h2 id="modal-category" style="margin-top:0; color: #8e442d; border-bottom: 2px solid #eee; padding-bottom: 10px;"></h2>
+        <div id="question-text" style="font-size: 1.3em; margin: 25px 0; line-height: 1.5;"></div>
         <div id="answer-area"></div>
         <button onclick="checkAnswer()">Skicka svar</button>
-        <button onclick="closeModal()" style="background:#7f8c8d; box-shadow: 0 4px 0 #555;">Stäng</button>
+        <button onclick="closeModal()" style="background:#555; box-shadow: 0 4px 0 #333;">Stäng</button>
     </div>
 
     <script>
         const categories = ["Ekvationer m. parentes", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
         
-        // Färgpalett för kategorierna (HSL för att enkelt kunna styra ljusstyrkan)
-        // H-värden: 0=Röd, 330=Rosa, 25=Orange, 10=Korall, 350=Djuprosa, 45=Guld/Orange
-        const categoryHues = [0, 330, 25, 10, 350, 45];
+        // Dovare färger (HSL): Vinröd, Gammelrosa, Bränd Orange, Rost, Purpur, Dov Guld
+        const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
-            // KATEGORI 1: Ekvationer m. parentes
-            "Ekvationer m. parentes-1": { q: "Vilket är första steget i att förenkla 2(5y + 3) = 6 + 7y?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "7y + 5 = 6 + 7y"], a: ["10y + 6 = 6 + 7y"] },
+            // KATEGORI 1: Ekvationer
+            "Ekvationer m. parentes-1": { q: "Vilket är första steget i förenklingen av 2(5y + 3) = 6 + 7y?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
             "Ekvationer m. parentes-2": { q: "Förenkla VL i ekvationen: 4(3x - 5) = 2x + 10", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
             "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4)", type: "text", a: "1" },
-            // ... fyll på fler här ...
+            "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1)", type: "text", a: "3.6" },
+            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y² - 1", type: "text", a: "-7" },
+
+            // KATEGORI 2: Faktorisering
+            "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur 18a + 9b:", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
+            "Faktorisering-2": { q: "Vilken är största gemensamma faktor i 7x² - 14x?", type: "multi", options: ["7x", "7", "x", "14"], a: ["7x"] },
+            "Faktorisering-3": { q: "Bryt ut största möjliga faktor: 12xy² + 6x²y", type: "text", a: "6xy(2y+x)" },
+            "Faktorisering-4": { q: "Förenkla: (3ab² + 12ba²) / 6ab", type: "text", a: "b/2+2a" },
+            "Faktorisering-5": { q: "Vad ska stå i parentesen? 4xy( ? ) = 4xy² - 6xy + 12x²", type: "text", a: "y-1.5+3x/y" },
+
+            // KATEGORI 3: Algebraiska uttryck
+            "Algebraiska uttryck-1": { q: "A = Alva, B = Berit. Vad betyder A = B + 7?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
+            "Algebraiska uttryck-2": { q: "Vilka påståenden beskriver A - B = -9 rätt? (Flera svar kan finnas)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-3": { q: "Utveckla och förenkla: (a + 3)(a - 4)", type: "text", a: "a^2-a-12" },
+            "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
+            "Algebraiska uttryck-5": { q: "Vad betyder uttrycket A = B - 0.10B?", type: "text", a: "Alva är 10% yngre än Berit" },
+
+            // KATEGORI 4: Ange formeln
+            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = 500 + 50m", "S = 50m - 500", "S = 550m"], a: ["S = 500 + 50m"] },
+            "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Vilken siffra är k-värdet?", type: "multi", options: ["2", "20", "t"], a: ["2"] },
+            "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för H efter t minuter?", type: "text", a: "H=8000-500t" },
+            "Ange formeln-4": { q: "KLURING: Pöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER?", type: "text", a: "r=20+t/30" },
+            "Ange formeln-5": { q: "Efter hur många minuter är flygplanets höjd 5500 m (H = 8000 - 500t)?", type: "text", a: "5" },
+
+            // KATEGORI 5: Formel, tabell & graf
+            "Formel, tabell & graf-1": { q: "Vad kallas punkten där linjen skär y-axeln?", type: "multi", options: ["m-värde", "k-värde", "Origo"], a: ["m-värde"] },
+            "Formel, tabell & graf-2": { q: "Om y=3x+2, vad är y när x=4?", type: "multi", options: ["14", "12", "9", "5"], a: ["14"] },
+            "Formel, tabell & graf-3": { q: "Lös ekvationen: y/2 + 3 = y/4 + 4", type: "text", a: "4" },
+            "Formel, tabell & graf-4": { q: "Lös ekvationen: 2x/5 - 1/2 = 2", type: "text", a: "6.25" },
+            "Formel, tabell & graf-5": { q: "Lös ekvationen: 1 - p/3 = p/2 - 1/2", type: "text", a: "1.8" },
+
+            // KATEGORI 6: Linjära funktioner
+            "Linjära funktioner-1": { q: "Vilken bokstav står för lutningen i y=kx+m?", type: "multi", options: ["k", "m", "x"], a: ["k"] },
+            "Linjära funktioner-2": { q: "Om k-värdet är negativt, lutar linjen:", type: "multi", options: ["Nedåt", "Uppåt", "Inte alls"], a: ["Nedåt"] },
+            "Linjära funktioner-3": { q: "Bestäm k-värdet för en linje genom (0, 2) och (1, 5).", type: "text", a: "3" },
+            "Linjära funktioner-4": { q: "Vilket m-värde har en linje som går genom origo?", type: "text", a: "0" },
+            "Linjära funktioner-5": { q: "Bestäm formeln för linjen genom (0, 4) och (2, 10).", type: "text", a: "y=3x+4" }
         };
 
-        // Fyller ut Nivå 1-5 för alla kategorier
-        for (let i = 1; i <= 5; i++) {
-            categories.forEach(cat => {
-                if (!questions[`${cat}-${i}`]) {
-                    questions[`${cat}-${i}`] = { q: `Fråga för ${cat} - Nivå ${i}`, type: "text", a: "svar" };
-                }
-            });
-        }
-
-        let totalScore = 0;
+        let totalScoreVal = 0;
         let currentQ = null;
         let currentId = null;
 
         function init() {
             const board = document.getElementById('game-board');
-            
-            // Skapa rubriker
             categories.forEach((c, index) => {
                 const hue = categoryHues[index];
-                board.innerHTML += `<div class="category-header" style="background: hsl(${hue}, 70%, 40%);">${c}</div>`;
+                board.innerHTML += `<div class="category-header" style="border-top: 3px solid hsl(${hue}, 40%, 40%)">${c}</div>`;
             });
             
-            // Skapa rutorna med graderad färg
             for(let row=1; row<=5; row++) {
                 categories.forEach((cat, colIndex) => {
                     const id = `${cat}-${row}`;
                     const hue = categoryHues[colIndex];
-                    
-                    // Ljusstyrka (Lightness): Nivå 1 = 70% (Ljus), Nivå 5 = 30% (Mörk)
-                    const lightness = 80 - (row * 10); 
-                    const shadowColor = `hsl(${hue}, 80%, ${lightness - 15}%)`;
-                    const bgColor = `linear-gradient(145deg, hsl(${hue}, 80%, ${lightness + 5}%), hsl(${hue}, 80%, ${lightness}%))`;
+                    const lightness = 45 - (row * 4); // Dovare gradering
+                    const shadowColor = `hsl(${hue}, 40%, ${lightness - 12}%)`;
+                    const bgColor = `linear-gradient(145deg, hsl(${hue}, 35%, ${lightness + 5}%), hsl(${hue}, 35%, ${lightness}%))`;
                     
                     board.innerHTML += `
                         <div class="cell" id="${id}" 
                              onclick="openQ('${cat}', ${row})" 
-                             style="background: ${bgColor}; box-shadow: 0 8px 0 ${shadowColor}, 0 10px 20px rgba(0,0,0,0.4);">
+                             style="background: ${bgColor}; box-shadow: 0 6px 0 ${shadowColor}, 0 8px 15px rgba(0,0,0,0.5);">
                              Nivå ${row}
                         </div>`;
                 });
@@ -215,13 +234,13 @@
         function openQ(cat, row) {
             currentId = `${cat}-${row}`;
             currentQ = questions[currentId];
-            document.getElementById('modal-category').innerText = cat + " - Nivå " + row;
+            document.getElementById('modal-category').innerText = cat + " (Nivå " + row + ")";
             document.getElementById('question-text').innerHTML = currentQ.q;
             const area = document.getElementById('answer-area');
             area.innerHTML = "";
 
             if(currentQ.type === "text") {
-                area.innerHTML = `<input type="text" id="ans" placeholder="Svar..." autocomplete="off">`;
+                area.innerHTML = `<input type="text" id="ans" placeholder="Ditt svar..." autocomplete="off">`;
             } else {
                 currentQ.options.forEach(o => {
                     area.innerHTML += `<label class="option"><input type="checkbox" name="multi" value="${o}"> ${o}</label>`;
@@ -232,27 +251,27 @@
         }
 
         function checkAnswer() {
-            let correct = false;
+            let isCorrect = false;
             if(currentQ.type === "text") {
-                const val = document.getElementById('ans').value.replace(/\s/g, "").toLowerCase();
-                const target = currentQ.a.replace(/\s/g, "").toLowerCase();
-                if(val === target || (parseFloat(val) === parseFloat(target))) correct = true;
+                const val = document.getElementById('ans').value.replace(/\s/g, "").toLowerCase().replace(",", ".");
+                const target = currentQ.a.replace(/\s/g, "").toLowerCase().replace(",", ".");
+                if(val === target || (parseFloat(val) === parseFloat(target))) isCorrect = true;
             } else {
                 const picked = Array.from(document.querySelectorAll('input[name="multi"]:checked')).map(e => e.value);
-                correct = picked.length === currentQ.a.length && picked.every(val => currentQ.a.includes(val));
+                isCorrect = picked.length === currentQ.a.length && picked.every(val => currentQ.a.includes(val));
             }
 
-            if(correct) {
-                alert("Klockrent!");
-                totalScore += 100;
-                document.getElementById('score-display').innerText = "POÄNG: " + totalScore;
+            if(isCorrect) {
+                alert("RÄTT!");
+                totalScoreVal += 100;
+                document.getElementById('score-display').innerText = "POÄNG: " + totalScoreVal;
                 const cell = document.getElementById(currentId);
                 cell.classList.add('disabled');
                 cell.onclick = null;
                 cell.innerText = "✔";
                 closeModal();
             } else {
-                alert("Försök igen!");
+                alert("Tyvärr, försök igen!");
             }
         }
 
