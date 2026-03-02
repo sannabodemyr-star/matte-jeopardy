@@ -2,6 +2,8 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <title>Matte-Jeopardy: Ma 1a</title>
     <style>
         :root {
@@ -171,7 +173,7 @@
             "Ekvationer m. parentes-2": { q: "Förenkla VL i ekvationen: 4(3x - 5) = 2x + 10", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
             "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4)", type: "text", a: "1" },
             "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1)", type: "text", a: "3.6" },
-            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y² - 1", type: "text", a: "-7" },
+            "Ekvationer m. parentes-5": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
 
             // KATEGORI 2: Faktorisering
             "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur 18a + 9b:", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
@@ -182,10 +184,10 @@
 
             // KATEGORI 3: Algebraiska uttryck
             "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder A = B + 7?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
-            "Algebraiska uttryck-2": { q: "Vilka påståenden beskriver A - B = -9 rätt? (Flera alternativ kan vara rätt)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
-            "Algebraiska uttryck-3": { q: "Utveckla och förenkla: (a + 3)(a - 4)", type: "text", a: "a^2-a-12" },
+            "Algebraiska uttryck-2": { q: "Alva är A år gammal och Berit är B år gammal. Vilka påståenden beskriver A - B = -9 rätt? (Flera alternativ kan vara rätt)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-3": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder A = B + 7?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"], a: [""]" },
             "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
-            "Algebraiska uttryck-5": { q: "Vad betyder uttrycket A = B - 0.10B?", type: "text", a: "Alva är 10% yngre än Berit" },
+            "Algebraiska uttryck-5": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder uttrycket A = B - 0.10B?", type: "multi", options: ["Berit är 0,1 år yngre än Alva", "Berit är 0,1 år äldre än Alva", "Berit är 10 % yngre än Alva", "Alva är 10 % yngre än Berit", "Berit är 10 % äldre än Alva"], a: ["Alva är 10 % yngre än Berit"]  },
 
             // KATEGORI 4: Ange formeln
             "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500"], a: ["S = 500 + 50m"] },
@@ -202,7 +204,7 @@
                 a: ["300 kr"] 
             },
             "Formel, tabell & graf-2": { q: "Om y=3x+2, vad är y när x=4?", type: "multi", options: ["14", "12", "9", "5"], a: ["14"] },
-            "Formel, tabell & graf-3": { q: "Om y=3x+2, vilket värde på x gör att y = 23?", type: "multi", options: ["1", "6", "7", "21"], a: ["7"]  },
+            "Formel, tabell & graf-3": { q: "Om y=3x+2, vilket värde på x gör att y = 23?", type: "text", a: "7" },
             "Formel, tabell & graf-4": { q: "Lös ekvationen: 2x/5 - 1/2 = 2", type: "text", a: "6.25" },
             "Formel, tabell & graf-5": { q: "Lös ekvationen: 1 - p/3 = p/2 - 1/2", type: "text", a: "1.8" },
 
