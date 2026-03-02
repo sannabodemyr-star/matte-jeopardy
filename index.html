@@ -158,7 +158,7 @@
     </div>
 
     <script>
-        const categories = ["Ekvationer m. parentes", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
+        const categories = ["Ekvationer", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
@@ -166,15 +166,15 @@
             "Ekvationer m. parentes-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
             "Ekvationer m. parentes-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
             "Ekvationer m. parentes-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
-            "Ekvationer m. parentes-4": { q: "Lös ekvationen: \\(40 - 4(x + 5) = 2(x - 1)\\)", type: "text", a: "3.6" },
-            "Ekvationer m. parentes-5": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
+            "Ekvationer m. parentes-4": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
+            "Ekvationer m. parentes-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5"  },
 
             // KATEGORI 2: Faktorisering
             "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur \\(18a + 9b\\):", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
             "Faktorisering-2": { q: "Vilken är största gemensamma faktor i \\(7x^2 - 14x\\)?", type: "multi", options: ["7x", "7", "x", "14"], a: ["7x"] },
             "Faktorisering-3": { q: "Bryt ut största möjliga faktor: \\(12xy^2 + 6x^2y\\)", type: "text", a: "6xy(2y+x)" },
             "Faktorisering-4": { q: "Förenkla: \\(\\frac{3ab^2 + 12ba^2}{6ab}\\)", type: "text", a: "b/2+2a" },
-            "Faktorisering-5": { q: "Vad ska stå i parentesen? \\(4xy( ? ) = 4xy^2 - 6xy + 12x^2\\)", type: "text", a: "y-1.5+3x/y" },
+            "Faktorisering-5": { q: "Vad ska stå i parentesen? \\(4xy( ? ) = 4xy^2 - 6xy + 12x^2\\)", type: "text", a: "y-1,5+3x/y" },
 
             // KATEGORI 3: Algebraiska uttryck
             "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder \\(A = B + 7\\)?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
@@ -191,18 +191,41 @@
             "Ange formeln-5": { q: "Efter hur många minuter är flygplanets höjd 5500 m?", type: "text", a: "5" },
 
             // KATEGORI 5: Formel, tabell & graf
-            "Formel, tabell & graf-1": { q: "Vad kallas punkten där linjen skär y-axeln?", type: "multi", options: ["m-värde", "k-värde", "Origo"], a: ["m-värde"] },
-            "Formel, tabell & graf-2": { q: "Om \\(y=3x+2\\), vad är y när x=4?", type: "multi", options: ["14", "12", "9", "5"], a: ["14"] },
-            "Formel, tabell & graf-3": { q: "Om \\(y=3x+2\\), vilket värde på x gör att y = 23?", type: "text", a: "7" },
-            "Formel, tabell & graf-4": { q: "Lös ekvationen: \\(\\frac{2x}{5} - \\frac{1}{2} = 2\\)", type: "text", a: "6.25" },
-            "Formel, tabell & graf-5": { q: "Lös ekvationen: \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "1.8" },
-
-            // KATEGORI 6: Linjära funktioner
-            "Linjära funktioner-1": { 
+            "Formel, tabell & graf-1": {
                 q: "Grafen visar hur Simons lön beror på tiden. Hur mycket tjänar han om han jobbar 4 timmar? <br><img src='linjar1.png' alt='Graf'>", 
                 type: "multi", 
                 options: ["200 kr", "300 kr", "400 kr", "500 kr"], 
                 a: ["300 kr"] 
+            },
+            
+            "Formel, tabell & graf-2": { 
+                q: "Om \\(y=3x+2\\), vad är y när x=4?", 
+                type: "multi", 
+                options: ["14", "12", "9", "5"], 
+                a: ["14"] 
+            },
+            
+            "Formel, tabell & graf-3": {
+                q: "Grafen visar hur Simons lön beror på tiden. Hur länge måste Simon jobba för att tjäna 600 kronor? <br><img src='linjar1.png' alt='Graf'>", 
+                type: "multi", 
+                options: ["3 timmar", "4 timmar", "6 timmar", "8 timmar"], 
+                a: ["8 timmar"] 
+            },
+            
+            "Formel, tabell & graf-4": { 
+                q: "Om \\(y=3x+2\\), vilket värde på x gör att y = 23?", 
+                type: "text", 
+                a: "7"
+            },
+            
+            "Formel, tabell & graf-5": {},
+
+            // KATEGORI 6: Linjära funktioner
+            "Linjära funktioner-1": { 
+                q: "Grafen visar Simons lön. Vad har Simon i timlön? <br><img src='linjar1.png' alt='Graf'>", 
+                type: "multi", 
+                options: ["ca 60 kr", "ca 100 kr", "ca 75 kr", "ca 90 kr"], 
+                a: ["ca 75 kr"] 
             },
             "Linjära funktioner-2": { q: "Grafen visar Simons lön. Vad har Simon i timlön? <br><img src='linjar1.png' alt='Graf'>", type: "multi", options: ["ca 60 kr", "ca 100 kr", "ca 75 kr", "ca 90 kr"], a: ["ca 75 kr"] },
             "Linjära funktioner-3": { q: "Bestäm k-värdet för en linje genom (0, 2) och (1, 5).", type: "text", a: "3" },
