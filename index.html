@@ -5,52 +5,184 @@
     <title>Matte-Jeopardy: Ma 1a</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a2a3a; color: white; text-align: center; margin: 0; padding: 20px; }
-        h1 { color: #f1c40f; text-shadow: 2px 2px #000; }
-        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-width: 1200px; margin: 20px auto; }
-        .category-header { background: #2980b9; padding: 15px; font-weight: bold; border-radius: 5px; font-size: 0.9em; min-height: 40px; display: flex; align-items: center; justify-content: center; }
-        .cell { background: #34495e; padding: 20px; cursor: pointer; border-radius: 5px; font-size: 1.5em; transition: 0.3s; border: 2px solid #2c3e50; }
-        .cell:hover { background: #f1c40f; color: #2c3e50; transform: scale(1.05); }
-        .cell.disabled { background: #27ae60; cursor: not-allowed; opacity: 0.6; color: white; }
+        h1 { color: #f1c40f; text-shadow: 2px 2px #000; margin-bottom: 5px; }
+        .score-box { background: #2ecc71; color: white; padding: 10px 20px; display: inline-block; border-radius: 20px; font-weight: bold; margin-bottom: 20px; font-size: 1.2em; }
+        .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-width: 1200px; margin: 0 auto; }
+        .category-header { background: #2980b9; padding: 15px; font-weight: bold; border-radius: 5px; font-size: 0.85em; display: flex; align-items: center; justify-content: center; min-height: 50px; line-height: 1.2; }
+        .cell { background: #34495e; padding: 25px 10px; cursor: pointer; border-radius: 5px; font-size: 1.8em; transition: 0.3s; border: 2px solid #2c3e50; font-weight: bold; color: #f1c40f; }
+        .cell:hover { background: #f1c40f; color: #2c3e50; transform: translateY(-3px); }
+        .cell.disabled { background: #27ae60; cursor: not-allowed; opacity: 0.4; color: white; border-color: #27ae60; }
 
         #modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                 background: white; color: #333; padding: 30px; border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.7); width: 90%; max-width: 600px; z-index: 1001; }
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+                 background: white; color: #333; padding: 30px; border-radius: 15px; box-shadow: 0 0 40px rgba(0,0,0,0.8); width: 90%; max-width: 600px; z-index: 1001; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; }
         
-        button { margin: 10px; padding: 12px 25px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 5px; font-size: 1em; }
-        input[type="text"] { width: 100%; padding: 12px; margin: 15px 0; border: 2px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 1.1em; }
-        .option { display: block; margin: 15px 0; text-align: left; padding: 10px; background: #f9f9f9; border-radius: 5px; cursor: pointer; }
+        button { margin: 10px; padding: 12px 25px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; font-size: 1.2em; }
+        .option { display: block; margin: 12px 0; text-align: left; padding: 15px; background: #edf2f7; border-radius: 8px; cursor: pointer; border: 1px solid #cbd5e0; }
+        .option:hover { background: #e2e8f0; }
     </style>
 </head>
 <body>
 
-    <h1>Matte-Jeopardy (100p per fråga)</h1>
-    <div id="score-display">Poäng: 0</div>
+    <h1>MATTE-JEOPARDY</h1>
+    <div class="score-box" id="score-display">POÄNG: 0</div>
     
     <div class="grid" id="game-board"></div>
 
     <div class="overlay" id="overlay"></div>
     <div id="modal">
-        <h2 id="modal-category" style="color:#2980b9"></h2>
-        <p id="question-text" style="font-size: 1.2em; line-height: 1.5;"></p>
+        <h2 id="modal-category" style="color:#2980b9; margin-top:0;"></h2>
+        <hr>
+        <p id="question-text" style="font-size: 1.3em; margin: 25px 0;"></p>
         <div id="answer-area"></div>
         <button onclick="checkAnswer()">Skicka svar</button>
         <button onclick="closeModal()" style="background:#e74c3c">Stäng</button>
     </div>
 
     <script>
-        const categories = ["Ekvationer m. parentes", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Ekvationer m. bråk", "Blandade kluringar"];
+        const categories = ["Ekvationer m. parentes", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
         let totalScore = 0;
 
         const questions = {
-            // Ekvationer med parenteser
-            "Ekvationer m. parentes-1": { q: "Lös ekvationen: 2(5y + 3) = 6 + 7y", type: "text", a: "0" },
-            "Ekvationer m. parentes-2": { q: "Lös ekvationen: 4(3x - 5) = 2x + 10", type: "text", a: "3" },
-            "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4)", type: "text", a: "1" },
-            "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1)", type: "text", a: "3.6" },
-            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y^2 - 1", type: "text", a: "-7" },
+            // Kategori 1: Ekvationer med parenteser
+            "Ekvationer m. parentes-1": { 
+                q: "Vilket värde på y löser ekvationen 2(5y + 3) = 6 + 7y? [cite: 7]", 
+                type: "multi", 
+                options: ["y = 0", "y = 1", "y = 4", "y = 12"], 
+                a: ["y = 0"] 
+            },
+            "Ekvationer m. parentes-2": { q: "Lös ekvationen: 4(3x - 5) = 2x + 10 [cite: 6]", type: "text", a: "3" },
+            "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4) [cite: 11]", type: "text", a: "1" },
+            "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1) [cite: 12]", type: "text", a: "3.6" },
+            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y^2 - 1 [cite: 40]", type: "text", a: "-7" },
 
-            // Faktorisering
-            "Faktorisering-1": { q: "Bryt ut största möjliga faktor: 18a + 9b", type: "text", a: "9(2a + b)" },
-            "Faktorisering-2": { q: "Bryt ut största möjliga faktor: 7x^2 - 14x", type: "text", a: "7x(x - 2)" },
-            "Faktorisering-3": { q: "Bryt ut största möjliga faktor: 12xy^2 + 6x^2y", type: "text", a: "6xy(2y + x)" },
-            "Faktorisering-4": { q: "Vad ska
+            // Kategori 2: Faktorisering
+            "Faktorisering-1": { 
+                q: "Vilket uttryck får du om du bryter ut största faktor ur 18a + 9b? [cite: 44]", 
+                type: "multi", 
+                options: ["9(2a + b)", "18(a + b)", "3(6a + 3b)", "9(a + b)"], 
+                a: ["9(2a + b)"] 
+            },
+            "Faktorisering-2": { q: "Bryt ut största möjliga faktor: 7x^2 - 14x [cite: 45]", type: "text", a: "7x(x-2)" },
+            "Faktorisering-3": { q: "Bryt ut största möjliga faktor: 12xy^2 + 6x^2y [cite: 47]", type: "text", a: "6xy(2y+x)" },
+            "Faktorisering-4": { q: "Vad ska stå i parentesen? 4xy( ? ) = 4xy^2 - 6xy + 12x^2 [cite: 50]", type: "text", a: "y-1.5+3x/y" },
+            "Faktorisering-5": { q: "Förenkla så långt som möjligt: (3ab^2 + 12ba^2) / 6ab [cite: 49]", type: "text", a: "b/2+2a" },
+
+            // Kategori 3: Algebraiska uttryck
+            "Algebraiska uttryck-1": { 
+                q: "Om A = Alvas ålder och B = Berits ålder. Vad innebär A = B + 7? [cite: 31]", 
+                type: "multi", 
+                options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva", "Alva är 7 år gammal"], 
+                a: ["Alva är 7 år äldre än Berit"] 
+            },
+            "Algebraiska uttryck-2": { q: "Tolka uttrycket: A - B = -9 ", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-3": { q: "Utveckla och förenkla: (a + 3)(a - 4) [cite: 39]", type: "text", a: "a^2-a-12" },
+            "Algebraiska uttryck-4": { q: "Vad betyder uttrycket A = B - 0.10B? [cite: 33]", type: "text", a: "Alva är 10% yngre än Berit" },
+            "Algebraiska uttryck-5": { q: "Marias lön (x), Johan (1.1x), Elias (0.8x). Totalt 87 000 kr. Vad tjänar Maria? [cite: 57, 58]", type: "text", a: "30000" },
+
+            // Kategori 4: Ange formeln
+            "Ange formeln-1": { 
+                q: "Kim har 500 kr och sparar 50 kr/mån. Vilken formel visar saldot S efter m månader? [cite: 15, 17]", 
+                type: "multi", 
+                options: ["S = 500 + 50m", "S = 50m - 500", "S = 500m + 50", "S = 550m"], 
+                a: ["S = 500 + 50m"] 
+            },
+            "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Formel för radie r efter t minuter? [cite: 19, 23]", type: "text", a: "r=20+2t" },
+            "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för höjden H efter t minuter? [cite: 26, 27]", type: "text", a: "H=8000-500t" },
+            "Ange formeln-4": { q: "Efter hur många minuter är flygplanets höjd 5500 meter (H = 8000 - 500t)? [cite: 28]", type: "text", a: "5" },
+            "Ange formeln-5": { q: "KLURING: Vattenpöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER? [cite: 25]", type: "text", a: "r=20+t/30" },
+
+            // Kategori 5: Formel, tabell & graf
+            "Formel, tabell & graf-1": { 
+                q: "Om en tabell visar att y ökar med 3 för varje steg x ökar med 1, och y=5 när x=0, vad är m-värdet?", 
+                type: "multi", 
+                options: ["m = 3", "m = 5", "m = 0", "m = 1"], 
+                a: ["m = 5"] 
+            },
+            "Formel, tabell & graf-2": { q: "Fråga 2 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Formel, tabell & graf-3": { q: "Fråga 3 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Formel, tabell & graf-4": { q: "Fråga 4 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Formel, tabell & graf-5": { q: "Fråga 5 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+
+            // Kategori 6: Linjära funktioner
+            "Linjära funktioner-1": { 
+                q: "Vad kallas konstanten 'k' i den linjära funktionen y = kx + m?", 
+                type: "multi", 
+                options: ["Riktningskoefficient", "Startvärde", "Konstantterm", "Variabel"], 
+                a: ["Riktningskoefficient"] 
+            },
+            "Linjära funktioner-2": { q: "Fråga 2 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Linjära funktioner-3": { q: "Fråga 3 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Linjära funktioner-4": { q: "Fråga 4 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Linjära funktioner-5": { q: "Fråga 5 (Väntar på dina uppgifter...)", type: "text", a: "svar" }
+        };
+
+        let currentQ = null;
+        let currentId = null;
+
+        function init() {
+            const board = document.getElementById('game-board');
+            categories.forEach(c => board.innerHTML += `<div class="category-header">${c}</div>`);
+            
+            for(let row=1; row<=5; row++) {
+                categories.forEach(cat => {
+                    const id = `${cat}-${row}`;
+                    board.innerHTML += `<div class="cell" id="${id}" onclick="openQ('${cat}', ${row})">100</div>`;
+                });
+            }
+        }
+
+        function openQ(cat, row) {
+            currentId = `${cat}-${row}`;
+            currentQ = questions[currentId];
+            document.getElementById('modal-category').innerText = cat;
+            document.getElementById('question-text').innerText = currentQ.q;
+            const area = document.getElementById('answer-area');
+            area.innerHTML = "";
+
+            if(currentQ.type === "text") {
+                area.innerHTML = `<input type="text" id="ans" placeholder="Skriv ditt svar..." autocomplete="off">`;
+            } else {
+                currentQ.options.forEach(o => {
+                    area.innerHTML += `<label class="option"><input type="checkbox" name="multi" value="${o}"> ${o}</label>`;
+                });
+            }
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function checkAnswer() {
+            let correct = false;
+            if(currentQ.type === "text") {
+                const val = document.getElementById('ans').value.replace(/\s/g, "").toLowerCase();
+                const target = currentQ.a.replace(/\s/g, "").toLowerCase();
+                if(val === target || (parseFloat(val) === parseFloat(target))) correct = true;
+            } else {
+                const picked = Array.from(document.querySelectorAll('input[name="multi"]:checked')).map(e => e.value);
+                // Kontrollera om de valda svaren matchar de rätta svaren exakt
+                correct = picked.length === currentQ.a.length && picked.every(val => currentQ.a.includes(val));
+            }
+
+            if(correct) {
+                alert("RÄTT! Du fick 100 poäng.");
+                totalScore += 100;
+                document.getElementById('score-display').innerText = "POÄNG: " + totalScore;
+                document.getElementById(currentId).classList.add('disabled');
+                document.getElementById(currentId).onclick = null;
+                document.getElementById(currentId).innerText = "✔";
+                closeModal();
+            } else {
+                alert("Tyvärr, det var fel eller ofullständigt svar. Försök igen!");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        init();
+    </script>
+</body>
+</html>
