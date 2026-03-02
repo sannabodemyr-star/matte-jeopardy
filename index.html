@@ -158,16 +158,17 @@
     </div>
 
     <script>
+        // KATEGORINAMN (måste matcha frågorna nedan exakt)
         const categories = ["Ekvationer", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
-            // KATEGORI 1: Ekvationer (MATCHAT NAMN MOT CATEGORIES)
+            // KATEGORI 1: Ekvationer
             "Ekvationer-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
             "Ekvationer-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
             "Ekvationer-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
             "Ekvationer-4": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
-            "Ekvationer-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5"  },
+            "Ekvationer-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5" },
 
             // KATEGORI 2: Faktorisering
             "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur \\(18a + 9b\\):", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
@@ -179,7 +180,7 @@
             // KATEGORI 3: Algebraiska uttryck
             "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder \\(A = B + 7\\)?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
             "Algebraiska uttryck-2": { q: "Alva är A år gammal och Berit är B år gammal. Vilka påståenden beskriver \\(A - B = -9\\) rätt? (Flera alternativ kan vara rätt)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
-            "Algebraiska uttryck-3": { q: "Vilket av följande uttryck kan \\((a + 3)(a - 4)\\) förenklas till?", type: "multi", options: ["\\(a^2-12\\)", "\\(a^2+7a+12\\)", "\\(a^2-a+12\\)", "\\(a^2-a-12\\)", "\\(a^2+a-12\\)", "\\(2a-1\\)" ], a: ["\\(a^2-a-12\\)"]  },
+            "Algebraiska uttryck-3": { q: "Vilket av följande uttryck kan \\((a + 3)(a - 4)\\) förenklas till?", type: "multi", options: ["\\(a^2-12\\)", "\\(a^2+7a+12\\)", "\\(a^2-a+12\\)", "\\(a^2-a-12\\)", "\\(a^2+a-12\\)", "\\(2a-1\\)" ], a: ["\\(a^2-a-12\\)"] },
             "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
             "Algebraiska uttryck-5": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder uttrycket \\(A = B - 0.10B\\)?", type: "multi", options: ["Berit är 0,1 år yngre än Alva", "Berit är 10 % yngre än Alva", "Alva är 10 % yngre än Berit"], a: ["Alva är 10 % yngre än Berit"] },
 
@@ -197,30 +198,26 @@
                 options: ["3 timmar", "4 timmar", "6 timmar", "8 timmar"], 
                 a: ["8 timmar"] 
             },
-            
             "Formel, tabell & graf-2": { 
                 q: "Om \\(y=3x+2\\), vad är y när x=4?", 
                 type: "multi", 
                 options: ["14", "12", "9", "5"], 
                 a: ["14"] 
             },
-            
             "Formel, tabell & graf-3": {
                 q: "Tabellen hör ihop med formeln \\(y=2x+4\\). Vad ska det stå i den blå rutan? <br><img src='tabell1.png' alt='Tabell'>", 
                 type: "text", 
                 a: "5"
             },
-            
             "Formel, tabell & graf-4": { 
                 q: "Om \\(y=3x+2\\), vilket värde på x gör att y = 23?", 
                 type: "text", 
                 a: "7"
             },
-            
             "Formel, tabell & graf-5": {
                 q: "Tabellen hör ihop med formeln \\(y=2x+4\\). Vad ska det stå i den gula rutan? <br><img src='tabell1.png' alt='Tabell'>", 
                 type: "text", 
-                a: "2,5"
+                a: "2.5"
             },
 
             // KATEGORI 6: Linjära funktioner
@@ -269,7 +266,10 @@
         function openQ(cat, row) {
             currentId = `${cat}-${row}`;
             currentQ = questions[currentId];
-            if(!currentQ) return; 
+            if(!currentQ) {
+                console.error("Fråga saknas för ID:", currentId);
+                return; 
+            }
 
             document.getElementById('modal-category').innerText = cat + " (Nivå " + row + ")";
             document.getElementById('question-text').innerHTML = currentQ.q;
