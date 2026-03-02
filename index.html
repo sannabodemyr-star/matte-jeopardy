@@ -162,12 +162,12 @@
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
-            // KATEGORI 1: Ekvationer
-            "Ekvationer m. parentes-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
-            "Ekvationer m. parentes-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
-            "Ekvationer m. parentes-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
-            "Ekvationer m. parentes-4": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
-            "Ekvationer m. parentes-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5"  },
+            // KATEGORI 1: Ekvationer (MATCHAT NAMN MOT CATEGORIES)
+            "Ekvationer-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
+            "Ekvationer-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
+            "Ekvationer-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
+            "Ekvationer-4": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
+            "Ekvationer-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5"  },
 
             // KATEGORI 2: Faktorisering
             "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur \\(18a + 9b\\):", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
@@ -286,7 +286,6 @@
             document.getElementById('modal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
 
-            // Rendera LaTeX efter att modalfönstret öppnats
             if (window.MathJax) {
                 MathJax.typesetPromise();
             }
