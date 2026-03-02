@@ -133,6 +133,14 @@
             border: 1px solid #d1b8ac; border-radius: 8px; 
             cursor: pointer; color: #333;
         }
+
+        img {
+            display: block;
+            margin: 15px auto; /* Centrerar bilden och ger luft */
+            max-width: 100%;   /* Ser till att bilden inte blir bredare än rutan */
+            height: auto;
+            border: 1px solid #ccc;
+        }
         .option:hover { background: #e8dbd4; }
     </style>
 </head>
@@ -181,7 +189,7 @@
             "Algebraiska uttryck-5": { q: "Vad betyder uttrycket A = B - 0.10B?", type: "text", a: "Alva är 10% yngre än Berit" },
 
             // KATEGORI 4: Ange formeln
-            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = 500 + 50m", "S = 50m - 500", "S = 550m"], a: ["S = 500 + 50m"] },
+            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500", "S = 550m"], a: ["S = 500 + 50m"] },
             "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Vilken siffra är k-värdet?", type: "multi", options: ["2", "20", "t"], a: ["2"] },
             "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för H efter t minuter?", type: "text", a: "H=8000-500t" },
             "Ange formeln-4": { q: "KLURING: Pöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER?", type: "text", a: "r=20+t/30" },
@@ -195,7 +203,7 @@
             "Formel, tabell & graf-5": { q: "Lös ekvationen: 1 - p/3 = p/2 - 1/2", type: "text", a: "1.8" },
 
             // KATEGORI 6: Linjära funktioner
-            "Linjära funktioner-1": { q: "Vilken bokstav står för lutningen i y=kx+m?", type: "multi", options: ["k", "m", "x"], a: ["k"] },
+            "Linjära funktioner-1": { q: "Grafen visar hur Simons lön för en dag beror på den tid han arbetar. Hur mycket tjänar Simon om han jobbar 4 timmar? <br><img src='linjar1.png' style='width:100%; max-width:300px; border-radius:5px;'>", },
             "Linjära funktioner-2": { q: "Om k-värdet är negativt, lutar linjen:", type: "multi", options: ["Nedåt", "Uppåt", "Inte alls"], a: ["Nedåt"] },
             "Linjära funktioner-3": { q: "Bestäm k-värdet för en linje genom (0, 2) och (1, 5).", type: "text", a: "3" },
             "Linjära funktioner-4": { q: "Vilket m-värde har en linje som går genom origo?", type: "text", a: "0" },
