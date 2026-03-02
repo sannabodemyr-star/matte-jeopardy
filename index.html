@@ -9,7 +9,7 @@
         .score-box { background: #2ecc71; color: white; padding: 10px 20px; display: inline-block; border-radius: 20px; font-weight: bold; margin-bottom: 20px; font-size: 1.2em; }
         .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-width: 1200px; margin: 0 auto; }
         .category-header { background: #2980b9; padding: 15px; font-weight: bold; border-radius: 5px; font-size: 0.85em; display: flex; align-items: center; justify-content: center; min-height: 50px; line-height: 1.2; }
-        .cell { background: #34495e; padding: 25px 10px; cursor: pointer; border-radius: 5px; font-size: 1.8em; transition: 0.3s; border: 2px solid #2c3e50; font-weight: bold; color: #f1c40f; }
+        .cell { background: #34495e; padding: 25px 10px; cursor: pointer; border-radius: 5px; font-size: 1.2em; transition: 0.3s; border: 2px solid #2c3e50; font-weight: bold; color: #f1c40f; }
         .cell:hover { background: #f1c40f; color: #2c3e50; transform: translateY(-3px); }
         .cell.disabled { background: #27ae60; cursor: not-allowed; opacity: 0.4; color: white; border-color: #27ae60; }
 
@@ -45,72 +45,72 @@
         let totalScore = 0;
 
         const questions = {
-            // Kategori 1: Ekvationer med parenteser
+            // Kategori 1: Ekvationer med parenteser (Från övningsbladet [cite: 6, 11, 40])
             "Ekvationer m. parentes-1": { 
-                q: "Vilket värde på y löser ekvationen 2(5y + 3) = 6 + 7y? [cite: 7]", 
+                q: "Vilket värde på y löser ekvationen 2(5y + 3) = 6 + 7y?", 
                 type: "multi", 
-                options: ["y = 0", "y = 1", "y = 4", "y = 12"], 
+                options: ["y = 0", "y = 1", "y = 3", "Inget av ovanstående"], 
                 a: ["y = 0"] 
             },
-            "Ekvationer m. parentes-2": { q: "Lös ekvationen: 4(3x - 5) = 2x + 10 [cite: 6]", type: "text", a: "3" },
-            "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4) [cite: 11]", type: "text", a: "1" },
-            "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1) [cite: 12]", type: "text", a: "3.6" },
-            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y^2 - 1 [cite: 40]", type: "text", a: "-7" },
+            "Ekvationer m. parentes-2": { q: "Lös ekvationen: 4(3x - 5) = 2x + 10", type: "text", a: "3" },
+            "Ekvationer m. parentes-3": { q: "Lös ekvationen: 5(a - 1) = 15 - 3(a + 4)", type: "text", a: "1" },
+            "Ekvationer m. parentes-4": { q: "Lös ekvationen: 40 - 4(x + 5) = 2(x - 1)", type: "text", a: "3.6" },
+            "Ekvationer m. parentes-5": { q: "Lös ekvationen: (y + 3)(y - 5) = y^2 - 1", type: "text", a: "-7" },
 
-            // Kategori 2: Faktorisering
+            // Kategori 2: Faktorisering (Från övningsbladet [cite: 44, 45, 47, 49, 50])
             "Faktorisering-1": { 
-                q: "Vilket uttryck får du om du bryter ut största faktor ur 18a + 9b? [cite: 44]", 
+                q: "Vilket uttryck får du om du bryter ut största faktor ur 18a + 9b?", 
                 type: "multi", 
-                options: ["9(2a + b)", "18(a + b)", "3(6a + 3b)", "9(a + b)"], 
+                options: ["9(2a + b)", "18(a + b)", "9(a + b)", "3(6a + 3b)"], 
                 a: ["9(2a + b)"] 
             },
-            "Faktorisering-2": { q: "Bryt ut största möjliga faktor: 7x^2 - 14x [cite: 45]", type: "text", a: "7x(x-2)" },
-            "Faktorisering-3": { q: "Bryt ut största möjliga faktor: 12xy^2 + 6x^2y [cite: 47]", type: "text", a: "6xy(2y+x)" },
-            "Faktorisering-4": { q: "Vad ska stå i parentesen? 4xy( ? ) = 4xy^2 - 6xy + 12x^2 [cite: 50]", type: "text", a: "y-1.5+3x/y" },
-            "Faktorisering-5": { q: "Förenkla så långt som möjligt: (3ab^2 + 12ba^2) / 6ab [cite: 49]", type: "text", a: "b/2+2a" },
+            "Faktorisering-2": { q: "Bryt ut största möjliga faktor: 7x^2 - 14x", type: "text", a: "7x(x-2)" },
+            "Faktorisering-3": { q: "Bryt ut största möjliga faktor ur 12xy^2 + 6x^2y", type: "text", a: "6xy(2y+x)" },
+            "Faktorisering-4": { q: "Förenkla så långt som möjligt: (3ab^2 + 12ba^2) / 6ab", type: "text", a: "b/2+2a" },
+            "Faktorisering-5": { q: "Vad ska stå i parentesen? 4xy( ? ) = 4xy^2 - 6xy + 12x^2", type: "text", a: "y-1.5+3x/y" },
 
-            // Kategori 3: Algebraiska uttryck
+            // Kategori 3: Algebraiska uttryck (Från övningsbladet [cite: 31, 33, 36, 39, 58])
             "Algebraiska uttryck-1": { 
-                q: "Om A = Alvas ålder och B = Berits ålder. Vad innebär A = B + 7? [cite: 31]", 
+                q: "A = Alvas ålder, B = Berits ålder. Vad betyder A = B + 7?", 
                 type: "multi", 
                 options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva", "Alva är 7 år gammal"], 
                 a: ["Alva är 7 år äldre än Berit"] 
             },
-            "Algebraiska uttryck-2": { q: "Tolka uttrycket: A - B = -9 ", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
-            "Algebraiska uttryck-3": { q: "Utveckla och förenkla: (a + 3)(a - 4) [cite: 39]", type: "text", a: "a^2-a-12" },
-            "Algebraiska uttryck-4": { q: "Vad betyder uttrycket A = B - 0.10B? [cite: 33]", type: "text", a: "Alva är 10% yngre än Berit" },
-            "Algebraiska uttryck-5": { q: "Marias lön (x), Johan (1.1x), Elias (0.8x). Totalt 87 000 kr. Vad tjänar Maria? [cite: 57, 58]", type: "text", a: "30000" },
+            "Algebraiska uttryck-2": { q: "Tolka uttrycket: A - B = -9", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-3": { q: "Utveckla och förenkla uttrycket (a + 3)(a - 4)", type: "text", a: "a^2-a-12" },
+            "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans tjänar de 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
+            "Algebraiska uttryck-5": { q: "Vad betyder uttrycket A = B - 0.10B?", type: "text", a: "Alva är 10% yngre än Berit" },
 
-            // Kategori 4: Ange formeln
+            // Kategori 4: Ange formeln (Från övningsbladet [cite: 17, 23, 25, 27])
             "Ange formeln-1": { 
-                q: "Kim har 500 kr och sparar 50 kr/mån. Vilken formel visar saldot S efter m månader? [cite: 15, 17]", 
+                q: "Kim har 500 kr och sparar 50 kr/mån. Vilken formel visar saldot S efter m månader?", 
                 type: "multi", 
-                options: ["S = 500 + 50m", "S = 50m - 500", "S = 500m + 50", "S = 550m"], 
+                options: ["S = 500 + 50m", "S = 50m - 500", "S = 500m + 50"], 
                 a: ["S = 500 + 50m"] 
             },
-            "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Formel för radie r efter t minuter? [cite: 19, 23]", type: "text", a: "r=20+2t" },
-            "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för höjden H efter t minuter? [cite: 26, 27]", type: "text", a: "H=8000-500t" },
-            "Ange formeln-4": { q: "Efter hur många minuter är flygplanets höjd 5500 meter (H = 8000 - 500t)? [cite: 28]", type: "text", a: "5" },
-            "Ange formeln-5": { q: "KLURING: Vattenpöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER? [cite: 25]", type: "text", a: "r=20+t/30" },
+            "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Formel för radie r efter t minuter?", type: "text", a: "r=20+2t" },
+            "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för höjden H efter t minuter?", type: "text", a: "H=8000-500t" },
+            "Ange formeln-4": { q: "En pöl (r=20) ökar 2 cm/min. Ställ upp en formel för radien r efter t SEKUNDER.", type: "text", a: "r=20+t/30" },
+            "Ange formeln-5": { q: "Efter hur många månader har Kim (S=500+50m) 1200 kr på kontot?", type: "text", a: "14" },
 
-            // Kategori 5: Formel, tabell & graf
+            // Kategori 5: Formel, tabell & graf (Platshållare för dina uppgifter)
             "Formel, tabell & graf-1": { 
-                q: "Om en tabell visar att y ökar med 3 för varje steg x ökar med 1, och y=5 när x=0, vad är m-värdet?", 
+                q: "När man ritar en linjär funktion i en graf, vad representerar punkten där linjen skär y-axeln?", 
                 type: "multi", 
-                options: ["m = 3", "m = 5", "m = 0", "m = 1"], 
-                a: ["m = 5"] 
+                options: ["m-värdet (startvärdet)", "k-värdet (lutningen)", "x-värdet", "Origo"], 
+                a: ["m-värdet (startvärdet)"] 
             },
-            "Formel, tabell & graf-2": { q: "Fråga 2 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
-            "Formel, tabell & graf-3": { q: "Fråga 3 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
+            "Formel, tabell & graf-2": { q: "Lös ekvationen: y/2 + 3 = y/4 + 4", type: "text", a: "4" },
+            "Formel, tabell & graf-3": { q: "Lös ekvationen: 2x/5 - 1/2 = 2", type: "text", a: "6.25" },
             "Formel, tabell & graf-4": { q: "Fråga 4 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
             "Formel, tabell & graf-5": { q: "Fråga 5 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
 
-            // Kategori 6: Linjära funktioner
+            // Kategori 6: Linjära funktioner (Platshållare för dina uppgifter)
             "Linjära funktioner-1": { 
-                q: "Vad kallas konstanten 'k' i den linjära funktionen y = kx + m?", 
+                q: "Vilket av följande är den generella formeln för en linjär funktion?", 
                 type: "multi", 
-                options: ["Riktningskoefficient", "Startvärde", "Konstantterm", "Variabel"], 
-                a: ["Riktningskoefficient"] 
+                options: ["y = kx + m", "y = k + xm", "x = ky + m", "y = x^2 + c"], 
+                a: ["y = kx + m"] 
             },
             "Linjära funktioner-2": { q: "Fråga 2 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
             "Linjära funktioner-3": { q: "Fråga 3 (Väntar på dina uppgifter...)", type: "text", a: "svar" },
@@ -128,7 +128,8 @@
             for(let row=1; row<=5; row++) {
                 categories.forEach(cat => {
                     const id = `${cat}-${row}`;
-                    board.innerHTML += `<div class="cell" id="${id}" onclick="openQ('${cat}', ${row})">100</div>`;
+                    // Här ändrade vi från 100 till "Nivå " + radnummer
+                    board.innerHTML += `<div class="cell" id="${id}" onclick="openQ('${cat}', ${row})">Nivå ${row}</div>`;
                 });
             }
         }
@@ -136,7 +137,7 @@
         function openQ(cat, row) {
             currentId = `${cat}-${row}`;
             currentQ = questions[currentId];
-            document.getElementById('modal-category').innerText = cat;
+            document.getElementById('modal-category').innerText = cat + " - Nivå " + row;
             document.getElementById('question-text').innerText = currentQ.q;
             const area = document.getElementById('answer-area');
             area.innerHTML = "";
@@ -160,12 +161,11 @@
                 if(val === target || (parseFloat(val) === parseFloat(target))) correct = true;
             } else {
                 const picked = Array.from(document.querySelectorAll('input[name="multi"]:checked')).map(e => e.value);
-                // Kontrollera om de valda svaren matchar de rätta svaren exakt
                 correct = picked.length === currentQ.a.length && picked.every(val => currentQ.a.includes(val));
             }
 
             if(correct) {
-                alert("RÄTT! Du fick 100 poäng.");
+                alert("RÄTT!");
                 totalScore += 100;
                 document.getElementById('score-display').innerText = "POÄNG: " + totalScore;
                 document.getElementById(currentId).classList.add('disabled');
@@ -173,7 +173,7 @@
                 document.getElementById(currentId).innerText = "✔";
                 closeModal();
             } else {
-                alert("Tyvärr, det var fel eller ofullständigt svar. Försök igen!");
+                alert("Fel svar, försök igen!");
             }
         }
 
