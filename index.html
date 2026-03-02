@@ -134,12 +134,13 @@
             cursor: pointer; color: #333;
         }
 
-        img {
+        #question-text img {
             display: block;
-            margin: 15px auto; /* Centrerar bilden och ger luft */
-            max-width: 100%;   /* Ser till att bilden inte blir bredare än rutan */
+            margin: 15px auto;
+            max-width: 100%;
             height: auto;
-            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .option:hover { background: #e8dbd4; }
     </style>
@@ -162,8 +163,6 @@
 
     <script>
         const categories = ["Ekvationer m. parentes", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
-        
-        // Dovare färger (HSL): Vinröd, Gammelrosa, Bränd Orange, Rost, Purpur, Dov Guld
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
@@ -182,18 +181,18 @@
             "Faktorisering-5": { q: "Vad ska stå i parentesen? 4xy( ? ) = 4xy² - 6xy + 12x²", type: "text", a: "y-1.5+3x/y" },
 
             // KATEGORI 3: Algebraiska uttryck
-            "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder A = B + 7? Flera alternativ kan vara rätt.", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år yngre än Berit"] },
-            "Algebraiska uttryck-2": { q: "Alva är A år gammal och Berit är B år gammal. Vilka påståenden beskriver A - B = -9 rätt? Flera alternativ kan vara rätt.", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år yngre än Berit","Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder A = B + 7?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
+            "Algebraiska uttryck-2": { q: "Vilka påståenden beskriver A - B = -9 rätt? (Flera alternativ kan vara rätt)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
             "Algebraiska uttryck-3": { q: "Utveckla och förenkla: (a + 3)(a - 4)", type: "text", a: "a^2-a-12" },
             "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
             "Algebraiska uttryck-5": { q: "Vad betyder uttrycket A = B - 0.10B?", type: "text", a: "Alva är 10% yngre än Berit" },
 
             // KATEGORI 4: Ange formeln
-            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500", "S = 550m"], a: ["S = 500 + 50m"] },
+            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500"], a: ["S = 500 + 50m"] },
             "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Vilken siffra är k-värdet?", type: "multi", options: ["2", "20", "t"], a: ["2"] },
             "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för H efter t minuter?", type: "text", a: "H=8000-500t" },
             "Ange formeln-4": { q: "KLURING: Pöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER?", type: "text", a: "r=20+t/30" },
-            "Ange formeln-5": { q: "Efter hur många minuter är flygplanets höjd 5500 m (H = 8000 - 500t)?", type: "text", a: "5" },
+            "Ange formeln-5": { q: "Efter hur många minuter är flygplanets höjd 5500 m?", type: "text", a: "5" },
 
             // KATEGORI 5: Formel, tabell & graf
             "Formel, tabell & graf-1": { q: "Vad kallas punkten där linjen skär y-axeln?", type: "multi", options: ["m-värde", "k-värde", "Origo"], a: ["m-värde"] },
@@ -203,7 +202,12 @@
             "Formel, tabell & graf-5": { q: "Lös ekvationen: 1 - p/3 = p/2 - 1/2", type: "text", a: "1.8" },
 
             // KATEGORI 6: Linjära funktioner
-            "Linjära funktioner-1": { q: "Grafen visar hur Simons lön för en dag beror på den tid han arbetar. Hur mycket tjänar Simon om han jobbar 4 timmar? <br><img src='linjar1.png' style='width:100%; max-width:300px; border-radius:5px;'>", },
+            "Linjära funktioner-1": { 
+                q: "Grafen visar Simons lön. Hur mycket tjänar han om han jobbar 4 timmar? <br><img src='linjar1.png' alt='Graf'>", 
+                type: "multi", 
+                options: ["200 kr", "300 kr", "400 kr", "500 kr"], 
+                a: ["600 kr"] 
+            },
             "Linjära funktioner-2": { q: "Om k-värdet är negativt, lutar linjen:", type: "multi", options: ["Nedåt", "Uppåt", "Inte alls"], a: ["Nedåt"] },
             "Linjära funktioner-3": { q: "Bestäm k-värdet för en linje genom (0, 2) och (1, 5).", type: "text", a: "3" },
             "Linjära funktioner-4": { q: "Vilket m-värde har en linje som går genom origo?", type: "text", a: "0" },
@@ -225,7 +229,7 @@
                 categories.forEach((cat, colIndex) => {
                     const id = `${cat}-${row}`;
                     const hue = categoryHues[colIndex];
-                    const lightness = 45 - (row * 4); // Dovare gradering
+                    const lightness = 45 - (row * 4);
                     const shadowColor = `hsl(${hue}, 40%, ${lightness - 12}%)`;
                     const bgColor = `linear-gradient(145deg, hsl(${hue}, 35%, ${lightness + 5}%), hsl(${hue}, 35%, ${lightness}%))`;
                     
@@ -242,6 +246,8 @@
         function openQ(cat, row) {
             currentId = `${cat}-${row}`;
             currentQ = questions[currentId];
+            if(!currentQ) return; 
+
             document.getElementById('modal-category').innerText = cat + " (Nivå " + row + ")";
             document.getElementById('question-text').innerHTML = currentQ.q;
             const area = document.getElementById('answer-area');
