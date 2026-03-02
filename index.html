@@ -137,6 +137,7 @@
             max-width: 100%;
             height: auto;
             border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -147,13 +148,13 @@
     
     <div class="grid" id="game-board"></div>
 
-    <div class="overlay" id="overlay" onclick="closeModal()"></div>
+    <div class="overlay" id="overlay"></div>
     <div id="modal">
-        <h2 id="modal-category" style="margin-top:0; color: #8e442d;"></h2>
-        <div id="question-text" style="font-size: 1.2em; margin: 20px 0;"></div>
+        <h2 id="modal-category" style="margin-top:0; color: #8e442d; border-bottom: 2px solid #eee; padding-bottom: 10px;"></h2>
+        <div id="question-text" style="font-size: 1.3em; margin: 25px 0; line-height: 1.5;"></div>
         <div id="answer-area"></div>
         <button onclick="checkAnswer()">Skicka svar</button>
-        <button onclick="closeModal()" style="background:#555;">Stäng</button>
+        <button onclick="closeModal()" style="background:#555; box-shadow: 0 4px 0 #333;">Stäng</button>
     </div>
 
     <script>
@@ -161,43 +162,48 @@
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
-            // KATEGORI 1
+            // KATEGORI 1: Ekvationer
             "Ekvationer m. parentes-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
             "Ekvationer m. parentes-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
             "Ekvationer m. parentes-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
             "Ekvationer m. parentes-4": { q: "Lös ekvationen: \\(40 - 4(x + 5) = 2(x - 1)\\)", type: "text", a: "3.6" },
             "Ekvationer m. parentes-5": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
 
-            // KATEGORI 2
+            // KATEGORI 2: Faktorisering
             "Faktorisering-1": { q: "Bryt ut största möjliga faktor ur \\(18a + 9b\\):", type: "multi", options: ["9(2a + b)", "18(a + b)", "9(a + b)"], a: ["9(2a + b)"] },
             "Faktorisering-2": { q: "Vilken är största gemensamma faktor i \\(7x^2 - 14x\\)?", type: "multi", options: ["7x", "7", "x", "14"], a: ["7x"] },
             "Faktorisering-3": { q: "Bryt ut största möjliga faktor: \\(12xy^2 + 6x^2y\\)", type: "text", a: "6xy(2y+x)" },
             "Faktorisering-4": { q: "Förenkla: \\(\\frac{3ab^2 + 12ba^2}{6ab}\\)", type: "text", a: "b/2+2a" },
             "Faktorisering-5": { q: "Vad ska stå i parentesen? \\(4xy( ? ) = 4xy^2 - 6xy + 12x^2\\)", type: "text", a: "y-1.5+3x/y" },
 
-            // KATEGORI 3
-            "Algebraiska uttryck-1": { q: "Alva är A år och Berit är B år. Vad betyder \\(A = B + 7\\)?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
-            "Algebraiska uttryck-2": { q: "Vilka påståenden beskriver \\(A - B = -9\\) rätt?", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
-            "Algebraiska uttryck-3": { q: "Förenkla uttrycket: \\((a+3)(a-4)\\)", type: "text", a: "a^2-a-12" },
+            // KATEGORI 3: Algebraiska uttryck
+            "Algebraiska uttryck-1": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder \\(A = B + 7\\)?", type: "multi", options: ["Alva är 7 år äldre än Berit", "Berit är 7 år äldre än Alva"], a: ["Alva är 7 år äldre än Berit"] },
+            "Algebraiska uttryck-2": { q: "Alva är A år gammal och Berit är B år gammal. Vilka påståenden beskriver \\(A - B = -9\\) rätt? (Flera alternativ kan vara rätt)", type: "multi", options: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva", "Alva är 9 år äldre"], a: ["Alva är 9 år yngre än Berit", "Berit är 9 år äldre än Alva"] },
+            "Algebraiska uttryck-3": { q: "Utveckla och förenkla: \\((a + 3)(a - 4)\\)", type: "text", a: "a^2-a-12" },
             "Algebraiska uttryck-4": { q: "Johan har 10% högre lön än Maria, Elias har 20% lägre. Tillsammans 87 000 kr. Vad tjänar Maria?", type: "text", a: "30000" },
-            "Algebraiska uttryck-5": { q: "Vad betyder uttrycket \\(A = B - 0.10B\\)?", type: "multi", options: ["Alva är 10 % yngre än Berit", "Berit är 10 % yngre än Alva", "Alva är 90 % äldre"], a: ["Alva är 10 % yngre än Berit"] },
+            "Algebraiska uttryck-5": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder uttrycket \\(A = B - 0.10B\\)?", type: "multi", options: ["Berit är 0,1 år yngre än Alva", "Berit är 10 % yngre än Alva", "Alva är 10 % yngre än Berit"], a: ["Alva är 10 % yngre än Berit"] },
 
-            // KATEGORI 4
-            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = 500 + 50m", "S = m + 50", "S = 50m - 500"], a: ["S = 500 + 50m"] },
+            // KATEGORI 4: Ange formeln
+            "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Formel för saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500"], a: ["S = 500 + 50m"] },
             "Ange formeln-2": { q: "Vattenpöl radie 20 cm, ökar 2 cm/min. Vilken siffra är k-värdet?", type: "multi", options: ["2", "20", "t"], a: ["2"] },
             "Ange formeln-3": { q: "Flygplan på 8000 m sjunker 500 m/min. Formel för H efter t minuter?", type: "text", a: "H=8000-500t" },
             "Ange formeln-4": { q: "KLURING: Pöl (r=20) ökar 2 cm/min. Formel för radie r efter t SEKUNDER?", type: "text", a: "r=20+t/30" },
             "Ange formeln-5": { q: "Efter hur många minuter är flygplanets höjd 5500 m?", type: "text", a: "5" },
 
-            // KATEGORI 5
+            // KATEGORI 5: Formel, tabell & graf
             "Formel, tabell & graf-1": { q: "Vad kallas punkten där linjen skär y-axeln?", type: "multi", options: ["m-värde", "k-värde", "Origo"], a: ["m-värde"] },
             "Formel, tabell & graf-2": { q: "Om \\(y=3x+2\\), vad är y när x=4?", type: "multi", options: ["14", "12", "9", "5"], a: ["14"] },
             "Formel, tabell & graf-3": { q: "Om \\(y=3x+2\\), vilket värde på x gör att y = 23?", type: "text", a: "7" },
             "Formel, tabell & graf-4": { q: "Lös ekvationen: \\(\\frac{2x}{5} - \\frac{1}{2} = 2\\)", type: "text", a: "6.25" },
             "Formel, tabell & graf-5": { q: "Lös ekvationen: \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "1.8" },
 
-            // KATEGORI 6
-            "Linjära funktioner-1": { q: "Vad är m-värdet för en linje som skär y-axeln vid (0, -5)?", type: "multi", options: ["-5", "5", "0", "x"], a: ["-5"] },
+            // KATEGORI 6: Linjära funktioner
+            "Linjära funktioner-1": { 
+                q: "Grafen visar hur Simons lön beror på tiden. Hur mycket tjänar han om han jobbar 4 timmar? <br><img src='linjar1.png' alt='Graf'>", 
+                type: "multi", 
+                options: ["200 kr", "300 kr", "400 kr", "500 kr"], 
+                a: ["300 kr"] 
+            },
             "Linjära funktioner-2": { q: "Grafen visar Simons lön. Vad har Simon i timlön? <br><img src='linjar1.png' alt='Graf'>", type: "multi", options: ["ca 60 kr", "ca 100 kr", "ca 75 kr", "ca 90 kr"], a: ["ca 75 kr"] },
             "Linjära funktioner-3": { q: "Bestäm k-värdet för en linje genom (0, 2) och (1, 5).", type: "text", a: "3" },
             "Linjära funktioner-4": { q: "Vilket m-värde har en linje som går genom origo?", type: "text", a: "0" },
@@ -225,9 +231,10 @@
                     const bgColor = `linear-gradient(145deg, hsl(${hue}, 35%, ${lightness + 5}%), hsl(${hue}, 35%, ${lightness}%))`;
                     
                     board.innerHTML += `
-                        <div class="cell" id="${id}" onclick="openQ('${cat}', ${row})" 
+                        <div class="cell" id="${id}" 
+                             onclick="openQ('${cat}', ${row})" 
                              style="background: ${bgColor}; box-shadow: 0 6px 0 ${shadowColor}, 0 8px 15px rgba(0,0,0,0.5);">
-                             ${row * 100}
+                             Nivå ${row}
                         </div>`;
                 });
             }
@@ -238,22 +245,22 @@
             currentQ = questions[currentId];
             if(!currentQ) return; 
 
-            document.getElementById('modal-category').innerText = cat + " - " + (row * 100) + "p";
+            document.getElementById('modal-category').innerText = cat + " (Nivå " + row + ")";
             document.getElementById('question-text').innerHTML = currentQ.q;
             const area = document.getElementById('answer-area');
             area.innerHTML = "";
 
             if(currentQ.type === "text") {
-                area.innerHTML = `<input type="text" id="ans" style="padding:10px; width:80%;" placeholder="Svar..." autocomplete="off">`;
+                area.innerHTML = `<input type="text" id="ans" placeholder="Ditt svar..." autocomplete="off" style="padding:10px; width:80%;">`;
             } else {
                 currentQ.options.forEach(o => {
                     area.innerHTML += `<label class="option"><input type="checkbox" name="multi" value="${o}"> ${o}</label>`;
                 });
             }
-            
             document.getElementById('modal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
 
+            // Rendera LaTeX efter att modalfönstret öppnats
             if (window.MathJax) {
                 MathJax.typesetPromise();
             }
@@ -272,14 +279,15 @@
 
             if(isCorrect) {
                 alert("RÄTT!");
-                totalScoreVal += parseInt(currentId.split("-")[1]) * 100;
+                totalScoreVal += 100;
                 document.getElementById('score-display').innerText = "POÄNG: " + totalScoreVal;
-                document.getElementById(currentId).classList.add('disabled');
-                document.getElementById(currentId).onclick = null;
-                document.getElementById(currentId).innerText = "✔";
+                const cell = document.getElementById(currentId);
+                cell.classList.add('disabled');
+                cell.onclick = null;
+                cell.innerText = "✔";
                 closeModal();
             } else {
-                alert("Fel svar, försök igen!");
+                alert("Tyvärr, försök igen!");
             }
         }
 
