@@ -183,10 +183,9 @@
             "Algebraiska uttryck-5": { q: "Alva är A år gammal och Berit är B år gammal. Vad betyder uttrycket \\(A = B - 0.10B\\)?", type: "multi", options: ["Berit är 0,1 år yngre än Alva", "Berit är 10 % yngre än Alva", "Alva är 10 % yngre än Berit"], a: ["Alva är 10 % yngre än Berit"] },
 
             "Ange formeln-1": { q: "Kim har 500 kr, sparar 50 kr/mån. Skriv en formel för Kims saldo S efter m månader?", type: "multi", options: ["S = m + 50","S = 500 + 50m", "S = 50m - 500", "S = 550m"], a: ["S = 500 + 50m"] },
-            "Ange formeln-2": { q: "En minibassäng är fylld med 60 liter vatten och läcker med 0,5 liter per minut. Vilken formel, där y är mängden vatten i liter och x är antal minuter, beskriver detta?", type: "multi", options: ["y =600-0,5 ", "y = 600x-0,5", "y = 600-0,5x","y = 600*0,5*x"], a: ["y = 600-0,5x"] },
+            "Ange formeln-2": { q: "En minibassäng är fylld med 600 liter vatten och läcker med 0,5 liter per minut. Vilken formel, där y är mängden vatten i liter och x är antal minuter, beskriver detta?", type: "multi", options: ["y =600-0,5 ", "y = 600x-0,5", "y = 600-0,5x","y = 600*0,5*x"], a: ["y = 600-0,5x"] },
             "Ange formeln-3": { q: "Ett flygplan befinner sig på på 8000 m höjd sjunker 500 m/min. Skriv en formel för höjden H i meter efter t minuter?", type: "text", a: "H=8000-500t" },
-            "Ange formeln-4": { q: "Formeltest 4", type: "text", a: "r=20+t/30" },
-            "Ange formeln-5": { q: "Formeltest 5", type: "text", a: "5" },
+            
 
             "Formel, tabell & graf-1": { q: "Grafen visar hur Simons lön beror på tiden. Hur länge måste Simon jobba för att tjäna 600 kronor? <br><img src='linjar1.png' alt='Graf'>", type: "multi", options: ["3 timmar", "4 timmar", "6 timmar", "8 timmar"], a: ["8 timmar"] },
             "Formel, tabell & graf-2": { q: "Om \\(y=3x+2\\), vad är y när x=4?", type: "multi", options: ["14", "12", "9", "5"], a: ["14"] },
@@ -220,17 +219,18 @@
                 unit: "st ägg"
             },
             "Enheter och muffins-4": { 
-                q: "Sanna har ett 500 g paket smör. Receptet kräver 150 g smör för 12 muffins. Hur många muffins kan hon maximalt baka?", 
-                type: "text", 
-                a: "40",
-                unit: "muffins"
-            },
-            "Enheter och muffins-5": { 
-                q: "Sanna använde 1,2 dl kakao. Receptet kräver 4 msk för 12 muffins. Hur många muffins bakade hon?", 
+               q: "Sanna använde 1,2 dl kakao. Receptet kräver 4 msk för 12 muffins. Hur många muffins bakade hon?", 
                 type: "text", 
                 a: "24",
                 unit: "muffins"
-            }
+
+            },
+            "Enheter och muffins-5": { 
+                 q: "Sanna har ett 500 g paket smör. Receptet kräver 150 g smör för 12 muffins. Hur många muffins kan hon maximalt baka?", 
+                type: "text", 
+                a: "40",
+                unit: "muffins"
+                            }
         };
 
         let totalScoreVal = 0;
