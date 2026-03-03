@@ -42,7 +42,7 @@
 
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
+            grid-template-columns: repeat(7, 1fr); 
             gap: 12px; 
             max-width: 1300px; 
             margin: 0 auto; 
@@ -159,7 +159,7 @@
 
     <script>
         // KATEGORINAMN (måste matcha frågorna nedan exakt)
-        const categories = ["Ekvationer", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner"];
+        const categories = ["Ekvationer", "Faktorisering", "Algebraiska uttryck", "Ange formeln", "Formel, tabell & graf", "Linjära funktioner","Enheter och muffins"];
         const categoryHues = [0, 340, 20, 15, 320, 40];
 
         const questions = {
@@ -239,6 +239,13 @@
             },
             "Linjära funktioner-4": { q: "Vilket m-värde har en linje som går genom origo?", type: "text", a: "0" },
             "Linjära funktioner-5": { q: "Bestäm formeln för linjen genom (0, 4) och (2, 10).", type: "text", a: "y=3x+4" }
+        },
+            // KATEGORI 7: Enheter och muffins
+            "Ekvationer-1": { q: "Vilket är första steget i förenklingen av \\(2(5y + 3) = 6 + 7y\\)?", type: "multi", options: ["10y + 6 = 6 + 7y", "10y + 3 = 6 + 7y", "10y + 6 = 13y"], a: ["10y + 6 = 6 + 7y"] },
+            "Ekvationer-2": { q: "Förenkla VL i ekvationen: \\(4(3x - 5) = 2x + 10\\)", type: "multi", options: ["12x - 20 = 2x + 10", "12x - 5 = 2x + 10", "7x - 20 = 2x + 10"], a: ["12x - 20 = 2x + 10"] },
+            "Ekvationer-3": { q: "Lös ekvationen: \\(5(a - 1) = 15 - 3(a + 4)\\)", type: "text", a: "1" },
+            "Ekvationer-4": { q: "Lös ekvationen: \\((y + 3)(y - 5) = y^2 - 1\\)", type: "text", a: "-7" },
+            "Ekvationer-5": { q: "Lös ekvationen (svara i enklaste bråkform): \\(1 - \\frac{p}{3} = \\frac{p}{2} - \\frac{1}{2}\\)", type: "text", a: "9/5" 
         };
 
         let totalScoreVal = 0;
